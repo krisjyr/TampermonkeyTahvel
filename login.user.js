@@ -10,7 +10,7 @@
 // ==/UserScript==
 
 (function () {
-  "use strict";
+    "use strict";
 
     function getCookie(name) {
         const dc = document.cookie;
@@ -38,7 +38,15 @@
 
         if (myCookie != null) {
             console.log("Logged In")
-            MainPage();
+
+            Pages();
+            TopBar();
+            NavBar();
+
+            window.addEventListener('popstate', function(event) {
+                setTimeout(Pages, 1000)
+            });
+
             return
         }
 
@@ -48,28 +56,74 @@
         return
     }
 
-    function MainPage() {
-        const sideNav = document.getElementById("sidenav-list");
+    function TopBar() {
+        const main = document.getElementById("main-wrapper")
+        main.children[0].children[2].children[3].remove()
+        main.children[0].children[2].children[2].remove()
+
+        document.getElementById("user-menu-name").innerHTML += "🔫"
+    }
+
+    function NavBar() {
+         const sideNav = document.getElementById("sidenav-list");
 
         sideNav.children[10].remove();
         sideNav.children[9].remove();
-        sideNav.children[8].remove();
         sideNav.children[7].remove();
         sideNav.children[6].remove();
         sideNav.children[5].remove();
         sideNav.children[4].remove();
 
+        let newSidebarButton = sideNav.children[4].children[0].children[0]
+        newSidebarButton.innerHTML = newSidebarButton.innerHTML.replace("Teated", "Tunnitöö")
+        newSidebarButton.setAttribute("href", "#/students/study")
+
+        newSidebarButton = sideNav.children[4]
+        newSidebarButton.remove();
+        sideNav.insertBefore(newSidebarButton, sideNav.children[2])
+
+        let homeworkButton = sideNav.children[3].children[0].children[0]
+        homeworkButton.innerHTML = homeworkButton.innerHTML.replace("Ülesanded", "Kodutööd")
+
         document.getElementById("repr-link-wrapper").remove();
-        document.getElementById("user-menu-name").innerHTML += "🔫"
+    }
 
-        const main = document.getElementById("main-wrapper")
-        main.children[0].children[2].children[3].remove()
-        main.children[0].children[2].children[2].remove()
+    function Pages() {
+        console.log("Override Pages")
 
-        document.getElementById("home-data-sections-container-small").children[3].remove()
-        console.log(document.getElementById("home-data-sections-container").children[0].children[1].remove())
+        if (window.location.href === "https://tahvel.edu.ee/#/") {
+            document.getElementById("home-data-sections-container-small").children[3].remove()
+            document.getElementById("home-data-sections-container").children[0].children[1].remove()
+        }
+
+        if (window.location.href === "https://tahvel.edu.ee/#/students/journals") {
+            const header = document.querySelector("table>thead>tr");
+            header.children[6].remove()
+            header.children[3].remove()
+            header.children[2].remove()
+
+            const container = document.querySelector("table>tbody");
+
+            for (const child of container.children) {
+                child.children[6].remove()
+                child.children[3].remove()
+                child.children[2].remove()
+
+                const grades = child.querySelector("td.md-cell>span");
+
+                for (let i = 0; i < grades.children.length; i++) {
+                    if (i % 2 === 0) {
+                        const grade = grades.children[i].children[0]
+
+                        if (grade.innerHTML === "2" || grade.innerHTML === "X") {
+                            grade.classList.add("bad")
+                        }
+                    }
+                }
+            }
+        }
     }
 
     //Login();
-    setTimeout(Login, 200);
+    setTimeout(Login, 500);
 })()
