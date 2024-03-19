@@ -66,7 +66,7 @@
     }
 
     function NavBar() {
-         const sideNav = document.getElementById("sidenav-list");
+        const sideNav = document.getElementById("sidenav-list");
 
         sideNav.children[10].remove();
         sideNav.children[9].remove();
@@ -87,31 +87,25 @@
         homeworkButton.innerHTML = homeworkButton.innerHTML.replace("Ülesanded", "Kodutööd")
 
         document.getElementById("repr-link-wrapper").remove();
+        document.getElementById("site-sidenav-wrapper").style.background = "transparent"
     }
-      function ChangeBG() {
-    let studentId;
-    fetch("https://tahvel.edu.ee/hois_back/user", {
 
-    }).then(response => response.json())
-    .then(data => {
-      studentId = data.student;
-      fetch("https://tahvel.edu.ee/hois_back/students/" + studentId, {
+    function ChangeBG() {
+        let studentId;
+        fetch("https://tahvel.edu.ee/hois_back/user").then(res => res.json())
+            .then(data => {
+            studentId = data.student;
+            fetch("https://tahvel.edu.ee/hois_back/students/" + studentId)
+                .then(res => res.json())
+                .then(data => {
+                const bg = document.getElementById("content-and-sidenav-wrapper");
 
-      }).then(response => response.json())
-      .then(data => {
-        const bg = document.getElementById("content-and-sidenav-wrapper");
-
-        // Create a new img element
-        let newImg = document.createElement('img');
-
-        // Set the src of the img element to the base64 string
-        newImg.src = 'data:' + data.photo.ftype + ';base64,' + data.photo.fdata;
-
-        // Set the newImg as a background of the bg element
-        bg.style.backgroundImage = 'url(' + newImg.src + ')';
-      })
-    });
-  }
+                let newImg = document.createElement('img');
+                newImg.src = 'data:' + data.photo.ftype + ';base64,' + data.photo.fdata;
+                bg.style.backgroundImage = 'url(' + newImg.src + ')';
+            })
+        });
+    }
 
 
     function Pages() {
@@ -120,6 +114,12 @@
         if (window.location.href === "https://tahvel.edu.ee/#/") {
             document.getElementById("home-data-sections-container-small").children[3].remove()
             document.getElementById("home-data-sections-container").children[0].children[1].remove()
+
+            const mainContent = document.getElementById("main-content")
+            mainContent.style.background = "transparent"
+            mainContent.children[0].style.background = "transparent"
+            mainContent.children[0].children[0].children[1].style.background = "transparent"
+            mainContent.children[0].children[0].children[1].children[0].style.background = "transparent"
         }
 
         if (window.location.href === "https://tahvel.edu.ee/#/students/journals") {
