@@ -42,6 +42,7 @@
             Pages();
             TopBar();
             NavBar();
+            ChangeBG();
 
             window.addEventListener('popstate', function(event) {
                 setTimeout(Pages, 1000)
@@ -87,6 +88,31 @@
 
         document.getElementById("repr-link-wrapper").remove();
     }
+      function ChangeBG() {
+    let studentId;
+    fetch("https://tahvel.edu.ee/hois_back/user", {
+
+    }).then(response => response.json())
+    .then(data => {
+      studentId = data.student;
+      fetch("https://tahvel.edu.ee/hois_back/students/" + studentId, {
+
+      }).then(response => response.json())
+      .then(data => {
+        const bg = document.getElementById("content-and-sidenav-wrapper");
+
+        // Create a new img element
+        let newImg = document.createElement('img');
+
+        // Set the src of the img element to the base64 string
+        newImg.src = 'data:' + data.photo.ftype + ';base64,' + data.photo.fdata;
+
+        // Set the newImg as a background of the bg element
+        bg.style.backgroundImage = 'url(' + newImg.src + ')';
+      })
+    });
+  }
+
 
     function Pages() {
         console.log("Override Pages")
