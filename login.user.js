@@ -1,9 +1,9 @@
 // ==UserScript==
-// @name         New Userscript
+// @name         Tahvel CLI (Gert, Patrick, Peter, Kristofer)
 // @namespace    http://tampermonkey.net/
-// @version      2024-03-05
-// @description  try to take over the world!
-// @author       You
+// @version      2024-03-19
+// @description  Tahvel remake
+// @author       Gert Mägi, Parick Lapimaa, Peter Saan and Kristofer Jürgenstein
 // @match        https://tahvel.edu.ee/
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=edu.ee
 // @grant        none
