@@ -137,6 +137,9 @@ const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay));
 						newImg.src =
 							"data:" + data.photo.ftype + ";base64," + data.photo.fdata;
 						bg.style.backgroundImage = "url(" + newImg.src + ")";
+						bg.style.backgroundSize = "50px";
+						bg.style.backgroundRepeat = "no-repeat";
+						bg.style.backgroundSize = "100% 100%";
 					});
 			});
 	}
