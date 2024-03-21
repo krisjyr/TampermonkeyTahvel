@@ -164,6 +164,14 @@ const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay));
 					"transparent";
 			}
 
+			const oldHomeworkButton = document.querySelector(
+				"button + button.home-data-section-tab-title.md-button.md-ink-ripple>span"
+			);
+
+			if (oldHomeworkButton !== null) {
+				oldHomeworkButton.parentElement.remove();
+			}
+
 			document
 				.querySelectorAll("span.home-timetable-section-event-type")
 				.forEach((element) => {
@@ -176,6 +184,20 @@ const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay));
 					if (element.children[0].innerHTML.length === 1)
 						element.children[0].remove();
 				});
+
+			document
+				.querySelectorAll("td.home-tasks-section-date-and-checkbox")
+				.forEach((element) => {
+					const checkbox = element.querySelector("md-checkbox");
+					if (checkbox !== null) {
+						checkbox.remove();
+					}
+
+					element.style.display = "table-cell";
+					element.style.verticalAlign = "middle";
+				});
+
+			return;
 		}
 
 		if (window.location.href === "https://tahvel.edu.ee/#/students/journals") {
@@ -219,6 +241,30 @@ const sleep = (delay) => new Promise((resolve) => setTimeout(resolve, delay));
 			if (nav !== null) {
 				nav.remove();
 			}
+
+			return;
+		}
+
+		if (window.location.href === "https://tahvel.edu.ee/#/students/study") {
+			const mainContent = document.getElementById("main-content");
+
+			const nav = mainContent.querySelector("md-nav-bar");
+			if (nav !== null) {
+				nav.remove();
+			}
+
+			return;
+		}
+
+		if (window.location.href === "https://tahvel.edu.ee/#/students/tasks") {
+			const mainContent = document.getElementById("main-content");
+
+			const nav = mainContent.querySelector("md-nav-bar");
+			if (nav !== null) {
+				nav.remove();
+			}
+
+			return;
 		}
 	}
 
